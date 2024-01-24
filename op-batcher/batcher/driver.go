@@ -2,6 +2,7 @@ package batcher
 
 import (
 	"context"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"io"
@@ -10,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	blob "github.com/rollkit/celestia-openrpc/types/blob"
+	"github.com/rollkit/go-da"
 
 	"github.com/ethereum/go-ethereum/core"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -346,13 +347,14 @@ func (l *BatchSubmitter) sendTransaction(txdata txData, queue *txmgr.Queue[txDat
 	data := txdata.Bytes()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Duration(l.RollupConfig.BlockTime)*time.Second)
-	blobData, _ := blob.NewBlobV0(l.DAClient.Namespace, data)
-	height, err := l.DAClient.Blob.Submit(ctx, []*blob.Blob{blobData}, -1)
-	id := celestia.NewID(height, blobData)
+	ids, _, err := l.DAClient.DA.Submit(ctx, [][]byte{data}, &da.SubmitOptions{
+		Namespace: da.Namespace(l.DAClient.Namespace.Bytes()),
+		GasPrice:  -1,
+	})
 	cancel()
-	if err == nil {
-		l.Log.Info("celestia: blob successfully submitted", "height", height, "id", id)
-		data = append(data, id...)
+	if err == nil && len(ids) == 1 {
+		l.Log.Info("celestia: blob successfully submitted", "id", hex.EncodeToString(ids[0]))
+		data = append([]byte{celestia.DerivationVersionCelestia}, ids[0]...)
 	} else {
 		l.Log.Info("celestia: blob submission failed; falling back to eth", "err", err)
 	}

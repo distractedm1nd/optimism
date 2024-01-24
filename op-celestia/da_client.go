@@ -6,29 +6,29 @@ import (
 	"net/http"
 
 	"github.com/filecoin-project/go-jsonrpc"
-	"github.com/rollkit/celestia-openrpc/types/blob"
-	"github.com/rollkit/celestia-openrpc/types/share"
+	"github.com/rollkit/celestia-openrpc/types/da"
+	"github.com/rollkit/celestia-openrpc/types/namespace"
 )
 
 const AuthKey = "Authorization"
 
 type Client struct {
-	Blob blob.API
+	DA da.API
 }
 
 type DAClient struct {
 	*Client
-	Namespace share.Namespace
+	Namespace namespace.Namespace
 }
 
-func NewDAClient(rpc string, authtoken string, namespace share.Namespace) (*DAClient, error) {
+func NewDAClient(rpc string, authtoken string, namespace namespace.Namespace) (*DAClient, error) {
 	var authHeader http.Header
 	if authtoken != "" {
 		authHeader = http.Header{AuthKey: []string{fmt.Sprintf("Bearer %s", authtoken)}}
 	}
 
 	var client Client
-	_, err := jsonrpc.NewClient(context.TODO(), rpc, "blob", client.Blob, authHeader)
+	_, err := jsonrpc.NewClient(context.TODO(), rpc, "da", client.DA, authHeader)
 	if err != nil {
 		return nil, err
 	}

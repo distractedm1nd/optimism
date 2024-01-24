@@ -156,13 +156,19 @@ func DataFromEVMTransactions(config *rollup.Config, batcherAddr common.Address, 
 				case celestia.DerivationVersionCelestia:
 					log.Info("celestia: blob request", "id", hex.EncodeToString(tx.Data()))
 					ctx, cancel := context.WithTimeout(context.Background(), 30*time.Duration(config.BlockTime)*time.Second)
-					height, commitment := celestia.ID(data).Split()
-					blob, err := daClient.Blob.Get(ctx, height, daClient.Namespace, commitment)
+					blobs, err := daClient.DA.Get(ctx, [][]byte{data[1:]})
 					cancel()
 					if err != nil {
 						return nil, NewResetError(fmt.Errorf("celestia: failed to resolve frame: %w", err))
 					}
-					out = append(out, blob.Data)
+					if len(blobs) != 1 {
+						log.Warn("celestia: unexpected length for blobs", "expected", 1, "got", len(blobs))
+						if len(blobs) == 0 {
+							log.Warn("celestia: skipping empty blobs")
+							continue
+						}
+					}
+					out = append(out, blobs[0])
 				default:
 					out = append(out, data)
 					log.Info("celestia: using eth fallback")
