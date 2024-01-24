@@ -6,7 +6,7 @@ import (
 )
 
 func SetDAClient(cfg celestia.Config) error {
-	client, err := celestia.NewDAClient(cfg.DaRpc)
+	client, err := celestia.NewDAClient(cfg.DaRpc, cfg.AuthToken, cfg.Namespace)
 	if err != nil {
 		return err
 	}

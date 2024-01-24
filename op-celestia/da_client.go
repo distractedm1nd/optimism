@@ -1,22 +1,24 @@
 package celestia
 
 import (
-	"github.com/rollkit/go-da/proxy"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"context"
+
+	celestia "github.com/rollkit/celestia-openrpc"
+	"github.com/rollkit/celestia-openrpc/types/share"
 )
 
 type DAClient struct {
-	Client *proxy.Client
+	*celestia.Client
+	Namespace share.Namespace
 }
 
-func NewDAClient(rpc string) (*DAClient, error) {
-	client := proxy.NewClient()
-	err := client.Start(rpc, grpc.WithTransportCredentials(insecure.NewCredentials()))
+func NewDAClient(rpc string, authtoken string, namespace share.Namespace) (*DAClient, error) {
+	client, err := celestia.NewClient(context.TODO(), rpc, authtoken)
 	if err != nil {
 		return nil, err
 	}
 	return &DAClient{
-		Client: client,
+		Client:    client,
+		Namespace: namespace,
 	}, nil
 }

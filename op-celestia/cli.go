@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/rollkit/celestia-openrpc/types/share"
 	"github.com/urfave/cli/v2"
 
 	opservice "github.com/ethereum-optimism/optimism/op-service"
@@ -29,7 +30,9 @@ func CLIFlags(envPrefix string) []cli.Flag {
 }
 
 type Config struct {
-	DaRpc string
+	DaRpc     string
+	AuthToken string
+	Namespace share.Namespace
 }
 
 func (c Config) Check() error {
@@ -45,7 +48,9 @@ func (c Config) Check() error {
 }
 
 type CLIConfig struct {
-	DaRpc string
+	DaRpc     string
+	AuthToken string
+	Namespace share.Namespace
 }
 
 func (c CLIConfig) Check() error {
@@ -55,6 +60,10 @@ func (c CLIConfig) Check() error {
 
 	if _, err := url.Parse(c.DaRpc); err != nil {
 		return fmt.Errorf("invalid da rpc: %w", err)
+	}
+
+	if _, err := share.NamespaceFromBytes([]byte(c.Namespace)); err != nil {
+		return fmt.Errorf("invalid namespace: %w", err)
 	}
 
 	return nil
