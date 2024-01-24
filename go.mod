@@ -10,6 +10,7 @@ require (
 	github.com/ethereum-optimism/go-ethereum-hdwallet v0.1.3
 	github.com/ethereum-optimism/superchain-registry/superchain v0.0.0-20231030223232-e16eae11e492
 	github.com/ethereum/go-ethereum v1.13.1
+	github.com/filecoin-project/go-jsonrpc v0.3.1
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-chi/docgen v1.2.0
@@ -38,7 +39,6 @@ require (
 	github.com/pkg/profile v1.7.0
 	github.com/prometheus/client_golang v1.17.0
 	github.com/rollkit/celestia-openrpc v0.3.0
-	github.com/rollkit/go-da v0.2.0
 	github.com/stretchr/testify v1.8.4
 	github.com/urfave/cli/v2 v2.25.7
 	golang.org/x/crypto v0.17.0
@@ -46,13 +46,11 @@ require (
 	golang.org/x/sync v0.5.0
 	golang.org/x/term v0.15.0
 	golang.org/x/time v0.4.0
-	google.golang.org/grpc v1.60.1
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/gorm v1.25.5
 )
 
 require (
-	cosmossdk.io/math v1.1.2 // indirect
 	github.com/DataDog/zstd v1.5.2 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/VictoriaMetrics/fastcache v1.12.1 // indirect
@@ -63,7 +61,6 @@ require (
 	github.com/btcsuite/btcd/btcec/v2 v2.3.2 // indirect
 	github.com/btcsuite/btcd/btcutil v1.1.2 // indirect
 	github.com/btcsuite/btclog v0.0.0-20170628155309-84c8d2346e9f // indirect
-	github.com/celestiaorg/go-fraud v0.2.0 // indirect
 	github.com/celestiaorg/go-header v0.4.1 // indirect
 	github.com/celestiaorg/merkletree v0.0.0-20210714075610-a84dc3ddbbe4 // indirect
 	github.com/celestiaorg/nmt v0.20.0 // indirect
@@ -95,15 +92,12 @@ require (
 	github.com/ethereum/c-kzg-4844 v0.3.1 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/felixge/fgprof v0.9.3 // indirect
-	github.com/filecoin-project/go-jsonrpc v0.3.1 // indirect
 	github.com/fjl/memsize v0.0.1 // indirect
 	github.com/flynn/noise v1.0.0 // indirect
 	github.com/francoispqt/gojay v1.2.13 // indirect
 	github.com/gballet/go-libpcsclite v0.0.0-20191108122812-4678299bea08 // indirect
 	github.com/gballet/go-verkle v0.0.0-20230607174250-df487255f46b // indirect
 	github.com/getsentry/sentry-go v0.18.0 // indirect
-	github.com/go-kit/log v0.2.1 // indirect
-	github.com/go-logfmt/logfmt v0.5.1 // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
@@ -227,7 +221,6 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231002182017-d307bd883b97 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
